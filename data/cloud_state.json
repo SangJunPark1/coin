@@ -1,25 +1,25 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-23T00:00:48+09:00",
+  "last_run_at": "2026-04-23T00:22:42+09:00",
   "ended": false,
-  "tick": 60,
-  "current_market": "KRW-BLUR",
-  "position_entry_tick": 59,
+  "tick": 72,
+  "current_market": null,
+  "position_entry_tick": null,
   "broker": {
     "market": "KRW-BLUR",
-    "cash": 748689.7726417339,
-    "realized_pnl": -1376.5455035953491,
+    "cash": 997754.3401601461,
+    "realized_pnl": -1750.4539036540373,
     "position": {
-      "qty": 5293.287027791221,
-      "avg_price": 47.12355
+      "qty": 0.0,
+      "avg_price": 0.0
     }
   },
   "risk": {
     "starting_equity": 1000000.0,
     "day_key": "2026-04-22",
     "entries_today": 7,
-    "exits_today": 6,
-    "consecutive_losses": 0,
+    "exits_today": 7,
+    "consecutive_losses": 1,
     "halted": false,
     "halt_reason": "",
     "period_started_at": "2026-04-22T21:03:00+09:00",
