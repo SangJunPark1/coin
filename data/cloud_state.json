@@ -1,25 +1,25 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-23T02:40:31+09:00",
+  "last_run_at": "2026-04-23T03:13:40+09:00",
   "ended": false,
-  "tick": 120,
-  "current_market": "KRW-FLUID",
-  "position_entry_tick": 98,
+  "tick": 132,
+  "current_market": "KRW-PENGU",
+  "position_entry_tick": 122,
   "broker": {
-    "market": "KRW-FLUID",
-    "cash": 753484.3212887608,
-    "realized_pnl": -2815.039827898654,
+    "market": "KRW-PENGU",
+    "cash": 808955.7919544063,
+    "realized_pnl": 1732.0265492091858,
     "position": {
-      "qty": 83.32196235928572,
-      "avg_price": 2914.4565
+      "qty": 15096.221463046959,
+      "avg_price": 12.706349999999999
     }
   },
   "risk": {
     "starting_equity": 1000000.0,
     "day_key": "2026-04-22",
-    "entries_today": 11,
-    "exits_today": 10,
-    "consecutive_losses": 1,
+    "entries_today": 12,
+    "exits_today": 11,
+    "consecutive_losses": 0,
     "halted": false,
     "halt_reason": "",
     "period_started_at": "2026-04-22T21:03:00+09:00",
