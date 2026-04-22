@@ -41,8 +41,8 @@
     "enabled": true,
     "provider": "openai",
     "min_confidence": 0.55,
-    "openai_model": "gpt-5.4-mini",
-    "api_key_env": "OPENAI_API_KEY"
+    "openai_model": "gpt-4o-mini",
+  "  api_key_env": "OPENAI_API_KEY"
   },
   "paths": {
     "trade_journal": "data/cloud_trades.csv",
