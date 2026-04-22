@@ -1,25 +1,25 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-23T01:39:02+09:00",
+  "last_run_at": "2026-04-23T02:12:40+09:00",
   "ended": false,
-  "tick": 96,
-  "current_market": "KRW-NEWT",
-  "position_entry_tick": 96,
+  "tick": 108,
+  "current_market": "KRW-FLUID",
+  "position_entry_tick": 98,
   "broker": {
-    "market": "KRW-NEWT",
-    "cash": 855629.9765438894,
-    "realized_pnl": -1398.2968148414948,
+    "market": "KRW-FLUID",
+    "cash": 753484.3212887608,
+    "realized_pnl": -2815.039827898654,
     "position": {
-      "qty": 1204.7434113962352,
-      "avg_price": 118.059
+      "qty": 83.32196235928572,
+      "avg_price": 2914.4565
     }
   },
   "risk": {
     "starting_equity": 1000000.0,
     "day_key": "2026-04-22",
-    "entries_today": 10,
-    "exits_today": 9,
-    "consecutive_losses": 0,
+    "entries_today": 11,
+    "exits_today": 10,
+    "consecutive_losses": 1,
     "halted": false,
     "halt_reason": "",
     "period_started_at": "2026-04-22T21:03:00+09:00",
