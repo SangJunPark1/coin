@@ -1,0 +1,57 @@
+name: Auto Cloud Paper Simulation
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cloud-paper-simulation
+  cancel-in-progress: false
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run catch-up simulation ticks
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          python -m coin_mvp.cloud_tick \
+            --config config.cloud.json \
+            --start-kst "2026-04-20T21:10:00+09:00" \
+            --end-kst "2026-04-25T18:00:00+09:00" \
+            --top-markets 30 \
+            --request-delay 0.18 \
+            --cadence-minutes 5 \
+            --max-catch-up-ticks 12 \
+            --output docs/index.html \
+            --output public_report/index.html
+
+      - name: Commit simulation state and report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p data logs docs public_report
+          touch docs/.nojekyll
+          git add -A data logs docs public_report
+          if git diff --cached --quiet; then
+            echo "No simulation changes to commit."
+          else
+            git commit -m "Update cloud paper simulation"
+            git push
+          fi
