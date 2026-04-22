@@ -1,25 +1,25 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-23T03:13:40+09:00",
+  "last_run_at": "2026-04-23T03:51:21+09:00",
   "ended": false,
-  "tick": 132,
-  "current_market": "KRW-PENGU",
-  "position_entry_tick": 122,
+  "tick": 144,
+  "current_market": null,
+  "position_entry_tick": null,
   "broker": {
     "market": "KRW-PENGU",
-    "cash": 808955.7919544063,
-    "realized_pnl": 1732.0265492091858,
+    "cash": 1000486.1304530251,
+    "realized_pnl": 1444.49146084128,
     "position": {
-      "qty": 15096.221463046959,
-      "avg_price": 12.706349999999999
+      "qty": 0.0,
+      "avg_price": 0.0
     }
   },
   "risk": {
     "starting_equity": 1000000.0,
     "day_key": "2026-04-22",
     "entries_today": 12,
-    "exits_today": 11,
-    "consecutive_losses": 0,
+    "exits_today": 12,
+    "consecutive_losses": 1,
     "halted": false,
     "halt_reason": "",
     "period_started_at": "2026-04-22T21:03:00+09:00",
