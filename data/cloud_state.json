@@ -1,0 +1,29 @@
+{
+  "started_at": "2026-04-20T21:10:00+09:00",
+  "last_run_at": "2026-04-22T21:04:21+09:00",
+  "ended": false,
+  "tick": 12,
+  "current_market": "KRW-CHIP",
+  "position_entry_tick": 2,
+  "broker": {
+    "market": "KRW-CHIP",
+    "cash": 900000.0,
+    "realized_pnl": 0.0,
+    "position": {
+      "qty": 703.521478697271,
+      "avg_price": 142.071
+    }
+  },
+  "risk": {
+    "starting_equity": 1000000.0,
+    "day_key": "2026-04-22",
+    "entries_today": 1,
+    "exits_today": 0,
+    "consecutive_losses": 0,
+    "halted": false,
+    "halt_reason": "",
+    "period_started_at": "2026-04-22T21:03:00+09:00",
+    "halt_started_tick": null,
+    "halt_until_tick": null
+  }
+}

@@ -1,0 +1,2 @@
+timestamp,market,side,price,qty,fee,cash_after,position_qty_after,realized_pnl,reason
+2026-04-22T12:04:14.356151+00:00,KRW-CHIP,buy,142.07100000,703.521478697271,50.00000000,900000.00000000,703.521478697271,0.00000000,uptrend filter passed; momentum 2.16%; volume 2.62x; expected upside 3.00%; RSI 66.7; above EMA200; BTC momentum 0.05%; BTC volatility 0.09%; fear-greed 32 Fear; BTC tx 557598; global cap 24h 2.45%; BTC dominance 57.93%; selected from top-volume scan
