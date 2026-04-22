@@ -1,25 +1,25 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-23T01:07:15+09:00",
+  "last_run_at": "2026-04-23T01:39:02+09:00",
   "ended": false,
-  "tick": 84,
-  "current_market": "KRW-AXL",
-  "position_entry_tick": 82,
+  "tick": 96,
+  "current_market": "KRW-NEWT",
+  "position_entry_tick": 96,
   "broker": {
-    "market": "KRW-AXL",
-    "cash": 748315.7551201095,
-    "realized_pnl": -1750.4539036540373,
+    "market": "KRW-NEWT",
+    "cash": 855629.9765438894,
+    "realized_pnl": -1398.2968148414948,
     "position": {
-      "qty": 2955.9818637243247,
-      "avg_price": 84.34214999999999
+      "qty": 1204.7434113962352,
+      "avg_price": 118.059
     }
   },
   "risk": {
     "starting_equity": 1000000.0,
     "day_key": "2026-04-22",
-    "entries_today": 8,
-    "exits_today": 7,
-    "consecutive_losses": 1,
+    "entries_today": 10,
+    "exits_today": 9,
+    "consecutive_losses": 0,
     "halted": false,
     "halt_reason": "",
     "period_started_at": "2026-04-22T21:03:00+09:00",
