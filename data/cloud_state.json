@@ -1,25 +1,25 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-22T21:14:35+09:00",
+  "last_run_at": "2026-04-22T22:22:47+09:00",
   "ended": false,
-  "tick": 24,
-  "current_market": "KRW-NEWT",
-  "position_entry_tick": 21,
+  "tick": 36,
+  "current_market": "KRW-PENGU",
+  "position_entry_tick": 35,
   "broker": {
-    "market": "KRW-NEWT",
-    "cash": 866816.8084261274,
-    "realized_pnl": -1555.4613661479088,
+    "market": "KRW-PENGU",
+    "cash": 880333.0675302027,
+    "realized_pnl": -2388.2996131514083,
     "position": {
-      "qty": 1095.385151945867,
-      "avg_price": 120.05999999999997
+      "qty": 9140.3119000235,
+      "avg_price": 12.8064
     }
   },
   "risk": {
     "starting_equity": 1000000.0,
     "day_key": "2026-04-22",
-    "entries_today": 2,
-    "exits_today": 1,
-    "consecutive_losses": 1,
+    "entries_today": 4,
+    "exits_today": 3,
+    "consecutive_losses": 0,
     "halted": false,
     "halt_reason": "",
     "period_started_at": "2026-04-22T21:03:00+09:00",
