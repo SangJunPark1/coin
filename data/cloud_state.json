@@ -1,25 +1,25 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-22T22:22:47+09:00",
+  "last_run_at": "2026-04-22T23:05:03+09:00",
   "ended": false,
-  "tick": 36,
-  "current_market": "KRW-PENGU",
-  "position_entry_tick": 35,
+  "tick": 48,
+  "current_market": null,
+  "position_entry_tick": null,
   "broker": {
-    "market": "KRW-PENGU",
-    "cash": 880333.0675302027,
-    "realized_pnl": -2388.2996131514083,
+    "market": "KRW-AERO",
+    "cash": 995903.5406228129,
+    "realized_pnl": -3775.830246792131,
     "position": {
-      "qty": 9140.3119000235,
-      "avg_price": 12.8064
+      "qty": 0.0,
+      "avg_price": 0.0
     }
   },
   "risk": {
     "starting_equity": 1000000.0,
     "day_key": "2026-04-22",
-    "entries_today": 4,
-    "exits_today": 3,
-    "consecutive_losses": 0,
+    "entries_today": 5,
+    "exits_today": 5,
+    "consecutive_losses": 2,
     "halted": false,
     "halt_reason": "",
     "period_started_at": "2026-04-22T21:03:00+09:00",
