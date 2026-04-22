@@ -1,25 +1,25 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-22T21:04:21+09:00",
+  "last_run_at": "2026-04-22T21:14:35+09:00",
   "ended": false,
-  "tick": 12,
-  "current_market": "KRW-CHIP",
-  "position_entry_tick": 2,
+  "tick": 24,
+  "current_market": "KRW-NEWT",
+  "position_entry_tick": 21,
   "broker": {
-    "market": "KRW-CHIP",
-    "cash": 900000.0,
-    "realized_pnl": 0.0,
+    "market": "KRW-NEWT",
+    "cash": 866816.8084261274,
+    "realized_pnl": -1555.4613661479088,
     "position": {
-      "qty": 703.521478697271,
-      "avg_price": 142.071
+      "qty": 1095.385151945867,
+      "avg_price": 120.05999999999997
     }
   },
   "risk": {
     "starting_equity": 1000000.0,
     "day_key": "2026-04-22",
-    "entries_today": 1,
-    "exits_today": 0,
-    "consecutive_losses": 0,
+    "entries_today": 2,
+    "exits_today": 1,
+    "consecutive_losses": 1,
     "halted": false,
     "halt_reason": "",
     "period_started_at": "2026-04-22T21:03:00+09:00",
