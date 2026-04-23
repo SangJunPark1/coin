@@ -1,25 +1,25 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-24T01:54:03+09:00",
+  "last_run_at": "2026-04-24T02:52:14+09:00",
   "ended": false,
-  "tick": 468,
-  "current_market": "KRW-FLOCK",
-  "position_entry_tick": 458,
+  "tick": 480,
+  "current_market": "KRW-KAT",
+  "position_entry_tick": 479,
   "broker": {
-    "market": "KRW-FLOCK",
-    "cash": 900977.8392334727,
-    "realized_pnl": 2360.6456374580885,
+    "market": "KRW-KAT",
+    "cash": 861996.1730907338,
+    "realized_pnl": 251.6654681295331,
     "position": {
-      "qty": 980.4763743551495,
-      "avg_price": 102.05099999999999
+      "qty": 6672.898419692657,
+      "avg_price": 20.51025
     }
   },
   "risk": {
     "starting_equity": 1000486.1304530251,
     "day_key": "2026-04-23",
-    "entries_today": 5,
-    "exits_today": 4,
-    "consecutive_losses": 0,
+    "entries_today": 6,
+    "exits_today": 5,
+    "consecutive_losses": 1,
     "halted": false,
     "halt_reason": "",
     "period_started_at": "2026-04-23T21:43:00+09:00",
