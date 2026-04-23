@@ -1,24 +1,24 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-23T23:29:06+09:00",
+  "last_run_at": "2026-04-24T00:10:14+09:00",
   "ended": false,
-  "tick": 432,
-  "current_market": "KRW-ZAMA",
-  "position_entry_tick": 430,
+  "tick": 444,
+  "current_market": "KRW-SOON",
+  "position_entry_tick": 434,
   "broker": {
-    "market": "KRW-ZAMA",
-    "cash": 754619.7454591956,
-    "realized_pnl": 7168.045926599676,
+    "market": "KRW-SOON",
+    "cash": 826242.8623218085,
+    "realized_pnl": 7401.972287492827,
     "position": {
-      "qty": 6114.0754487838485,
-      "avg_price": 41.12055
+      "qty": 611.7177541039755,
+      "avg_price": 294.147
     }
   },
   "risk": {
     "starting_equity": 1000486.1304530251,
     "day_key": "2026-04-23",
-    "entries_today": 2,
-    "exits_today": 1,
+    "entries_today": 3,
+    "exits_today": 2,
     "consecutive_losses": 0,
     "halted": false,
     "halt_reason": "",
