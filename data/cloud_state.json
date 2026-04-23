@@ -1,25 +1,25 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-24T02:52:14+09:00",
+  "last_run_at": "2026-04-24T03:04:59+09:00",
   "ended": false,
-  "tick": 480,
-  "current_market": "KRW-KAT",
-  "position_entry_tick": 479,
+  "tick": 492,
+  "current_market": "KRW-ZBT",
+  "position_entry_tick": 482,
   "broker": {
-    "market": "KRW-KAT",
-    "cash": 861996.1730907338,
-    "realized_pnl": 251.6654681295331,
+    "market": "KRW-ZBT",
+    "cash": 853435.7847502709,
+    "realized_pnl": -2619.9828354706115,
     "position": {
-      "qty": 6672.898419692657,
-      "avg_price": 20.51025
+      "qty": 852.7489493094139,
+      "avg_price": 167.0835
     }
   },
   "risk": {
     "starting_equity": 1000486.1304530251,
     "day_key": "2026-04-23",
-    "entries_today": 6,
-    "exits_today": 5,
-    "consecutive_losses": 1,
+    "entries_today": 7,
+    "exits_today": 6,
+    "consecutive_losses": 2,
     "halted": false,
     "halt_reason": "",
     "period_started_at": "2026-04-23T21:43:00+09:00",
