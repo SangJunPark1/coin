@@ -1,25 +1,25 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-24T03:04:59+09:00",
+  "last_run_at": "2026-04-24T03:48:21+09:00",
   "ended": false,
-  "tick": 492,
-  "current_market": "KRW-ZBT",
-  "position_entry_tick": 482,
+  "tick": 504,
+  "current_market": "KRW-BIO",
+  "position_entry_tick": 495,
   "broker": {
-    "market": "KRW-ZBT",
-    "cash": 853435.7847502709,
-    "realized_pnl": -2619.9828354706115,
+    "market": "KRW-BIO",
+    "cash": 753066.9420789521,
+    "realized_pnl": -4537.35367209863,
     "position": {
-      "qty": 852.7489493094139,
-      "avg_price": 167.0835
+      "qty": 4983.249266281496,
+      "avg_price": 48.324149999999996
     }
   },
   "risk": {
     "starting_equity": 1000486.1304530251,
     "day_key": "2026-04-23",
-    "entries_today": 7,
-    "exits_today": 6,
-    "consecutive_losses": 2,
+    "entries_today": 8,
+    "exits_today": 7,
+    "consecutive_losses": 3,
     "halted": false,
     "halt_reason": "",
     "period_started_at": "2026-04-23T21:43:00+09:00",
