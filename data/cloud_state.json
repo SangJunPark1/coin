@@ -1,8 +1,8 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-24T21:17:21+09:00",
+  "last_run_at": "2026-04-24T21:51:19+09:00",
   "ended": false,
-  "tick": 756,
+  "tick": 768,
   "current_market": null,
   "position_entry_tick": null,
   "broker": {
@@ -15,15 +15,15 @@
     }
   },
   "risk": {
-    "starting_equity": 1000486.1304530251,
-    "day_key": "2026-04-23",
-    "entries_today": 8,
-    "exits_today": 8,
+    "starting_equity": 987045.503431846,
+    "day_key": "2026-04-24",
+    "entries_today": 0,
+    "exits_today": 0,
     "consecutive_losses": 4,
-    "halted": true,
-    "halt_reason": "max consecutive losses reached",
-    "period_started_at": "2026-04-23T21:43:00+09:00",
-    "halt_started_tick": 749,
-    "halt_until_tick": 761
+    "halted": false,
+    "halt_reason": "",
+    "period_started_at": "2026-04-24T21:45:00+09:00",
+    "halt_started_tick": null,
+    "halt_until_tick": null
   }
 }
