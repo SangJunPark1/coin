@@ -1,8 +1,8 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-24T23:14:43+09:00",
+  "last_run_at": "2026-04-24T23:27:46+09:00",
   "ended": false,
-  "tick": 780,
+  "tick": 792,
   "current_market": null,
   "position_entry_tick": null,
   "broker": {
@@ -23,7 +23,7 @@
     "halted": true,
     "halt_reason": "max consecutive losses reached",
     "period_started_at": "2026-04-24T21:45:00+09:00",
-    "halt_started_tick": 769,
-    "halt_until_tick": 781
+    "halt_started_tick": 789,
+    "halt_until_tick": 801
   }
 }
