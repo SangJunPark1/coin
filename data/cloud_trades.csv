@@ -1,1 +1,2 @@
 timestamp,market,side,price,qty,fee,cash_after,position_qty_after,realized_pnl,reason
+2026-04-26T10:30:38.332880+00:00,KRW-RAY,buy,1178.58900000,67.843836994915,40.00000000,920000.00000000,67.843836994915,0.00000000,uptrend filter passed; momentum 1.03%; volume 1.69x; expected upside 3.00%; RSI 55.5; above EMA200; BTC momentum 0.01%; BTC volatility 0.02%; fear-greed 33 Fear; BTC tx 707810; global cap 24h 0.23%; BTC dominance 58.17%; selected from top-volume scan
