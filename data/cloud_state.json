@@ -1,20 +1,20 @@
 {
   "started_at": "2026-04-26T17:50:00+09:00",
-  "last_run_at": "2026-04-26T19:30:38+09:00",
+  "last_run_at": "2026-04-26T19:53:37+09:00",
   "ended": false,
-  "tick": 20,
-  "current_market": "KRW-RAY",
-  "position_entry_tick": 20,
+  "tick": 25,
+  "current_market": null,
+  "position_entry_tick": null,
   "market_reentry_until_tick": {},
   "market_stopout_ticks": {},
   "broker": {
     "market": "KRW-RAY",
-    "cash": 920000.0,
-    "realized_pnl": 0.0,
+    "cash": 1000517.9000212288,
+    "realized_pnl": 557.9000212287938,
     "position": {
-      "qty": 67.84383699491512,
-      "avg_price": 1178.589,
-      "peak_price": 1178.589,
+      "qty": 0.0,
+      "avg_price": 0.0,
+      "peak_price": 0.0,
       "partial_exit_taken": false
     }
   },
@@ -22,7 +22,7 @@
     "starting_equity": 1000000.0,
     "day_key": "2026-04-26",
     "entries_today": 1,
-    "exits_today": 0,
+    "exits_today": 1,
     "consecutive_losses": 0,
     "halted": false,
     "halt_reason": "",
