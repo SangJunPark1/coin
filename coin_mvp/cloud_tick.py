@@ -116,6 +116,8 @@ def apply_state(app: MultiMarketTradingApp, state: dict[str, Any]) -> None:
     app.broker.position = Position(
         qty=float(position.get("qty", 0.0)),
         avg_price=float(position.get("avg_price", 0.0)),
+        peak_price=float(position.get("peak_price", 0.0)),
+        partial_exit_taken=bool(position.get("partial_exit_taken", False)),
     )
 
     risk = state.get("risk", {})
@@ -134,6 +136,16 @@ def apply_state(app: MultiMarketTradingApp, state: dict[str, Any]) -> None:
     app.current_market = state.get("current_market")
     entry_tick = state.get("position_entry_tick")
     app.position_entry_tick = int(entry_tick) if entry_tick is not None else None
+    reentry_until = state.get("market_reentry_until_tick", {})
+    if isinstance(reentry_until, dict):
+        app.market_reentry_until_tick = {str(key): int(value) for key, value in reentry_until.items()}
+    stopout_ticks = state.get("market_stopout_ticks", {})
+    if isinstance(stopout_ticks, dict):
+        app.market_stopout_ticks = {
+            str(key): [int(item) for item in value if item is not None]
+            for key, value in stopout_ticks.items()
+            if isinstance(value, list)
+        }
 
 
 def save_state(path: Path, app: MultiMarketTradingApp, tick: int, started_at: datetime, ended: bool) -> None:
@@ -145,6 +157,8 @@ def save_state(path: Path, app: MultiMarketTradingApp, tick: int, started_at: da
         "tick": tick,
         "current_market": app.current_market,
         "position_entry_tick": app.position_entry_tick,
+        "market_reentry_until_tick": app.market_reentry_until_tick,
+        "market_stopout_ticks": app.market_stopout_ticks,
         "broker": {
             "market": app.broker.market,
             "cash": app.broker.cash,

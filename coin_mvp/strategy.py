@@ -40,7 +40,40 @@ class MovingAverageStrategy:
         entry_ok, entry_reason, confidence = self._entry_quality(candles, short_ma, long_ma)
         if short_ma > long_ma and latest_price > long_ma and entry_ok:
             return Signal(Side.BUY, entry_reason, latest_price, confidence)
-        return Signal(Side.HOLD, "no entry condition", latest_price, 0.1)
+        range_signal, range_reason = self._range_rebound_signal(candles, short_ma, long_ma)
+        if range_signal is not None:
+            return range_signal
+        if short_ma <= long_ma and latest_price <= long_ma:
+            return Signal(
+                Side.HOLD,
+                self._combine_hold_reasons(
+                    f"ma alignment failed: short {short_ma:.3f} <= long {long_ma:.3f}; price below long MA {latest_price:.3f} <= {long_ma:.3f}",
+                    range_reason,
+                ),
+                latest_price,
+                0.1,
+            )
+        if short_ma <= long_ma:
+            return Signal(
+                Side.HOLD,
+                self._combine_hold_reasons(
+                    f"ma alignment failed: short {short_ma:.3f} <= long {long_ma:.3f}",
+                    range_reason,
+                ),
+                latest_price,
+                0.1,
+            )
+        if latest_price <= long_ma:
+            return Signal(
+                Side.HOLD,
+                self._combine_hold_reasons(
+                    f"price below long MA: {latest_price:.3f} <= {long_ma:.3f}",
+                    range_reason,
+                ),
+                latest_price,
+                0.1,
+            )
+        return Signal(Side.HOLD, self._combine_hold_reasons(entry_reason, range_reason), latest_price, 0.1)
 
     def _entry_quality(self, candles: list[Candle], short_ma: float, long_ma: float) -> tuple[bool, str, float]:
         closes = [c.close for c in candles]
@@ -74,6 +107,64 @@ class MovingAverageStrategy:
         rsi_text = f"; RSI {rsi:.1f}" if rsi is not None else ""
         ema_text = f"; above EMA{self.config.long_trend_ema_window}" if long_trend_ema is not None else ""
         return True, f"uptrend filter passed; momentum {recent_momentum_pct:.2f}%; volume {volume_ratio:.2f}x; expected upside {expected_upside_pct:.2f}%{rsi_text}{ema_text}", confidence
+
+    def _range_rebound_signal(self, candles: list[Candle], short_ma: float, long_ma: float) -> tuple[Signal | None, str]:
+        if not self.config.enable_range_rebound:
+            return None, "range rebound disabled"
+        closes = [c.close for c in candles]
+        latest_price = closes[-1]
+        previous_price = closes[-2] if len(closes) >= 2 else latest_price
+        lookback = min(self.config.range_rebound_lookback, len(candles))
+        recent = candles[-lookback:]
+        recent_low = min(candle.low for candle in recent)
+        if recent_low <= 0:
+            return None, "range rebound blocked: invalid recent low"
+        bounce_pct = ((latest_price / previous_price) - 1.0) * 100.0 if previous_price > 0 else 0.0
+        distance_from_low_pct = ((latest_price / recent_low) - 1.0) * 100.0
+        volume_ratio = latest_volume_ratio(candles, lookback=10)
+        expected_upside_pct = estimate_expected_upside_pct(candles, self.config.target_upside_pct)
+        rsi = calculate_rsi(closes, self.config.rsi_period)
+        long_trend_ema = calculate_ema(closes, self.config.long_trend_ema_window)
+        ema_gap_pct = ((long_trend_ema / latest_price) - 1.0) * 100.0 if long_trend_ema and latest_price > 0 else 0.0
+
+        if bounce_pct < self.config.range_rebound_min_bounce_pct:
+            return None, f"range rebound blocked: weak bounce {bounce_pct:.2f}%"
+        if distance_from_low_pct > self.config.range_rebound_max_distance_from_low_pct:
+            return None, f"range rebound blocked: too far from low {distance_from_low_pct:.2f}%"
+        if volume_ratio < self.config.range_rebound_min_volume_ratio:
+            return None, f"range rebound blocked: thin rebound volume {volume_ratio:.2f}x"
+        if expected_upside_pct < self.config.range_rebound_min_expected_upside_pct:
+            return None, f"range rebound blocked: upside {expected_upside_pct:.2f}%"
+        if rsi is None or rsi < self.config.range_rebound_min_rsi or rsi > self.config.range_rebound_max_entry_rsi:
+            if rsi is None:
+                return None, "range rebound blocked: RSI unavailable"
+            return None, f"range rebound blocked: RSI {rsi:.1f}"
+        if long_trend_ema is not None and ema_gap_pct > self.config.range_rebound_max_ema_gap_pct:
+            return None, f"range rebound blocked: EMA gap {ema_gap_pct:.2f}%"
+        if latest_price < short_ma:
+            return None, f"range rebound blocked: price below short MA {latest_price:.3f} < {short_ma:.3f}"
+        confidence = min(
+            0.78,
+            0.48
+            + min(bounce_pct / 2.0, 0.08)
+            + min(volume_ratio - 0.9, 0.12)
+            + min(expected_upside_pct / 25.0, 0.08),
+        )
+        ema_text = f"; EMA gap {ema_gap_pct:.2f}%" if long_trend_ema is not None else ""
+        rsi_text = f"; RSI {rsi:.1f}" if rsi is not None else ""
+        return Signal(
+            Side.BUY,
+            f"range rebound setup: bounce {bounce_pct:.2f}%; distance from low {distance_from_low_pct:.2f}%; volume {volume_ratio:.2f}x; expected upside {expected_upside_pct:.2f}%{rsi_text}{ema_text}",
+            latest_price,
+            confidence,
+        ), ""
+
+    def _combine_hold_reasons(self, primary_reason: str, secondary_reason: str) -> str:
+        if not secondary_reason:
+            return primary_reason
+        if secondary_reason in primary_reason:
+            return primary_reason
+        return f"{primary_reason}; {secondary_reason}"
 
 
 def mean(values: list[float]) -> float:
@@ -145,6 +236,41 @@ def estimate_expected_upside_pct(candles: list[Candle], target_upside_pct: float
     volatility_budget = recent_volatility_pct(candles, lookback=min(20, max(3, len(recent) - 1))) * 1.5
     expected = max(upside_to_high, min(recent_range * 0.5, volatility_budget))
     return min(target_upside_pct, expected)
+
+
+def estimate_expected_downside_pct(candles: list[Candle], stop_loss_pct: float, volatility_multiplier: float = 1.1, lookback: int = 20) -> float:
+    recent = candles[-lookback:]
+    if not recent:
+        return stop_loss_pct
+    latest = recent[-1].close
+    if latest <= 0:
+        return stop_loss_pct
+    recent_low = min(candle.low for candle in recent)
+    pullback_to_low = max(0.0, (latest / recent_low - 1.0) * 100.0) if recent_low > 0 else stop_loss_pct
+    volatility_budget = recent_volatility_pct(candles, lookback=min(lookback, max(3, len(recent) - 1))) * max(0.5, volatility_multiplier)
+    downside = min(max(stop_loss_pct, volatility_budget), max(stop_loss_pct, pullback_to_low))
+    return max(stop_loss_pct, downside)
+
+
+def market_breadth_ratio(candles_by_market: dict[str, list[Candle]], short_window: int, long_window: int, ema_window: int) -> float:
+    if not candles_by_market:
+        return 0.0
+    passing = 0
+    total = 0
+    for candles in candles_by_market.values():
+        if len(candles) < max(long_window, ema_window, short_window):
+            continue
+        closes = [c.close for c in candles]
+        latest = closes[-1]
+        short_ma = mean(closes[-short_window:])
+        long_ma = mean(closes[-long_window:])
+        ema = calculate_ema(closes, ema_window)
+        total += 1
+        if short_ma > long_ma and latest > long_ma and (ema is None or latest > ema):
+            passing += 1
+    if total == 0:
+        return 0.0
+    return passing / total
 
 
 def volatility_adjusted_position_fraction(candles: list[Candle], config: StrategyConfig) -> float:

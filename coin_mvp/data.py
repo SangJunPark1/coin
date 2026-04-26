@@ -8,7 +8,7 @@ import urllib.request
 from datetime import datetime, timedelta, timezone
 from typing import Protocol
 
-from .models import Candle
+from .models import Candle, OrderbookSnapshot
 
 
 class MarketDataSource(Protocol):
@@ -23,9 +23,10 @@ class UpbitPublicDataSource:
         self.unit_minutes = unit_minutes
         self.timeout_seconds = timeout_seconds
 
-    def get_recent_candles(self, market: str, count: int) -> list[Candle]:
+    def get_recent_candles(self, market: str, count: int, unit_minutes: int | None = None) -> list[Candle]:
+        unit = unit_minutes or self.unit_minutes
         params = urllib.parse.urlencode({"market": market, "count": count})
-        url = f"https://api.upbit.com/v1/candles/minutes/{self.unit_minutes}?{params}"
+        url = f"https://api.upbit.com/v1/candles/minutes/{unit}?{params}"
         request = urllib.request.Request(url, headers={"Accept": "application/json"})
         with urllib.request.urlopen(request, timeout=self.timeout_seconds) as response:
             payload = json.loads(response.read().decode("utf-8"))
@@ -46,7 +47,29 @@ class UpbitPublicDataSource:
             )
         return list(reversed(candles))
 
-    def get_top_krw_markets(self, count: int) -> list[str]:
+    def get_orderbook_snapshot(self, market: str) -> OrderbookSnapshot:
+        params = urllib.parse.urlencode({"markets": market})
+        url = f"https://api.upbit.com/v1/orderbook?{params}"
+        request = urllib.request.Request(url, headers={"Accept": "application/json"})
+        with urllib.request.urlopen(request, timeout=self.timeout_seconds) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+        row = payload[0]
+        units = row.get("orderbook_units", [])
+        first = units[0] if units else {}
+        total_bid_size = sum(float(unit.get("bid_size", 0.0)) for unit in units)
+        total_ask_size = sum(float(unit.get("ask_size", 0.0)) for unit in units)
+        return OrderbookSnapshot(
+            market=market,
+            timestamp=datetime.now(timezone.utc),
+            best_bid_price=float(first.get("bid_price", 0.0)),
+            best_bid_size=float(first.get("bid_size", 0.0)),
+            best_ask_price=float(first.get("ask_price", 0.0)),
+            best_ask_size=float(first.get("ask_size", 0.0)),
+            total_bid_size=total_bid_size,
+            total_ask_size=total_ask_size,
+        )
+
+    def get_top_krw_markets(self, count: int, min_trade_price_krw: float = 0.0) -> list[str]:
         markets = self._get_krw_markets()
         tickers = []
         for chunk in chunks(markets, 80):
@@ -55,6 +78,8 @@ class UpbitPublicDataSource:
             request = urllib.request.Request(url, headers={"Accept": "application/json"})
             with urllib.request.urlopen(request, timeout=self.timeout_seconds) as response:
                 tickers.extend(json.loads(response.read().decode("utf-8")))
+        if min_trade_price_krw > 0:
+            tickers = [row for row in tickers if float(row.get("trade_price", 0.0)) >= min_trade_price_krw]
         tickers.sort(key=lambda row: float(row.get("acc_trade_price_24h", 0.0)), reverse=True)
         return [str(row["market"]) for row in tickers[:count]]
 

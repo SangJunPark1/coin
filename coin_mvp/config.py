@@ -29,6 +29,33 @@ class StrategyConfig:
     min_btc_momentum_pct: float = -0.7
     min_expected_upside_pct: float = 0.8
     target_upside_pct: float = 3.0
+    blocked_entry_hours_kst: tuple[int, ...] = ()
+    reentry_cooldown_ticks: int = 6
+    stop_volatility_multiplier: float = 1.1
+    breakeven_trigger_pct: float = 0.8
+    partial_take_profit_pct: float = 1.0
+    partial_take_profit_fraction: float = 0.5
+    trailing_stop_pct: float = 0.8
+    min_orderbook_imbalance: float = 0.95
+    max_orderbook_spread_bps: float = 12.0
+    min_market_breadth_ratio: float = 0.35
+    min_price_krw: float = 100.0
+    max_recent_stopouts_per_market: int = 2
+    stopout_lookback_ticks: int = 144
+    five_minute_short_window: int = 3
+    five_minute_long_window: int = 6
+    min_five_minute_momentum_pct: float = 0.0
+    five_minute_trend_tolerance_pct: float = 0.2
+    enable_range_rebound: bool = True
+    range_rebound_lookback: int = 12
+    range_rebound_max_distance_from_low_pct: float = 3.0
+    range_rebound_max_ema_gap_pct: float = 3.5
+    range_rebound_min_bounce_pct: float = 0.15
+    range_rebound_min_volume_ratio: float = 0.9
+    range_rebound_min_expected_upside_pct: float = 1.0
+    range_rebound_min_rsi: float = 35.0
+    range_rebound_max_entry_rsi: float = 55.0
+    range_rebound_trend_break_grace_ticks: int = 2
 
 
 @dataclass(frozen=True)
@@ -40,6 +67,7 @@ class RiskConfig:
     max_consecutive_losses: int
     halt_cooldown_ticks: int = 6
     consecutive_loss_cooldown_ticks: int = 12
+    max_expected_downside_to_upside_ratio: float = 1.0
 
 
 @dataclass(frozen=True)
@@ -113,6 +141,33 @@ def load_config(path: str | Path) -> AppConfig:
             min_btc_momentum_pct=float(strategy.get("min_btc_momentum_pct", -0.7)),
             min_expected_upside_pct=float(strategy.get("min_expected_upside_pct", 0.8)),
             target_upside_pct=float(strategy.get("target_upside_pct", risk.get("daily_profit_target_pct", 3.0))),
+            blocked_entry_hours_kst=tuple(int(value) for value in strategy.get("blocked_entry_hours_kst", [])),
+            reentry_cooldown_ticks=int(strategy.get("reentry_cooldown_ticks", 6)),
+            stop_volatility_multiplier=float(strategy.get("stop_volatility_multiplier", 1.1)),
+            breakeven_trigger_pct=float(strategy.get("breakeven_trigger_pct", 0.8)),
+            partial_take_profit_pct=float(strategy.get("partial_take_profit_pct", 1.0)),
+            partial_take_profit_fraction=float(strategy.get("partial_take_profit_fraction", 0.5)),
+            trailing_stop_pct=float(strategy.get("trailing_stop_pct", 0.8)),
+            min_orderbook_imbalance=float(strategy.get("min_orderbook_imbalance", 0.95)),
+            max_orderbook_spread_bps=float(strategy.get("max_orderbook_spread_bps", 12.0)),
+            min_market_breadth_ratio=float(strategy.get("min_market_breadth_ratio", 0.35)),
+            min_price_krw=float(strategy.get("min_price_krw", 100.0)),
+            max_recent_stopouts_per_market=int(strategy.get("max_recent_stopouts_per_market", 2)),
+            stopout_lookback_ticks=int(strategy.get("stopout_lookback_ticks", 144)),
+            five_minute_short_window=int(strategy.get("five_minute_short_window", 3)),
+            five_minute_long_window=int(strategy.get("five_minute_long_window", 6)),
+            min_five_minute_momentum_pct=float(strategy.get("min_five_minute_momentum_pct", 0.0)),
+            five_minute_trend_tolerance_pct=float(strategy.get("five_minute_trend_tolerance_pct", 0.2)),
+            enable_range_rebound=bool(strategy.get("enable_range_rebound", True)),
+            range_rebound_lookback=int(strategy.get("range_rebound_lookback", 12)),
+            range_rebound_max_distance_from_low_pct=float(strategy.get("range_rebound_max_distance_from_low_pct", 3.0)),
+            range_rebound_max_ema_gap_pct=float(strategy.get("range_rebound_max_ema_gap_pct", 3.5)),
+            range_rebound_min_bounce_pct=float(strategy.get("range_rebound_min_bounce_pct", 0.15)),
+            range_rebound_min_volume_ratio=float(strategy.get("range_rebound_min_volume_ratio", 0.9)),
+            range_rebound_min_expected_upside_pct=float(strategy.get("range_rebound_min_expected_upside_pct", 1.0)),
+            range_rebound_min_rsi=float(strategy.get("range_rebound_min_rsi", 35.0)),
+            range_rebound_max_entry_rsi=float(strategy.get("range_rebound_max_entry_rsi", 55.0)),
+            range_rebound_trend_break_grace_ticks=int(strategy.get("range_rebound_trend_break_grace_ticks", 2)),
         ),
         risk=RiskConfig(
             daily_profit_target_pct=float(risk["daily_profit_target_pct"]),
@@ -122,6 +177,7 @@ def load_config(path: str | Path) -> AppConfig:
             max_consecutive_losses=int(risk["max_consecutive_losses"]),
             halt_cooldown_ticks=int(risk.get("halt_cooldown_ticks", 6)),
             consecutive_loss_cooldown_ticks=int(risk.get("consecutive_loss_cooldown_ticks", risk.get("halt_cooldown_ticks", 6))),
+            max_expected_downside_to_upside_ratio=float(risk.get("max_expected_downside_to_upside_ratio", 1.0)),
         ),
         ai_decision=AiDecisionConfig(
             enabled=bool(ai_decision.get("enabled", True)),
@@ -191,6 +247,54 @@ def _validate_config(config: AppConfig) -> None:
         raise ValueError("min_expected_upside_pct must not be negative.")
     if config.strategy.target_upside_pct <= 0:
         raise ValueError("target_upside_pct must be positive.")
+    if any(hour < 0 or hour > 23 for hour in config.strategy.blocked_entry_hours_kst):
+        raise ValueError("blocked_entry_hours_kst must contain hours between 0 and 23.")
+    if config.strategy.reentry_cooldown_ticks < 0:
+        raise ValueError("reentry_cooldown_ticks must not be negative.")
+    if config.strategy.stop_volatility_multiplier <= 0:
+        raise ValueError("stop_volatility_multiplier must be positive.")
+    if config.strategy.breakeven_trigger_pct < 0:
+        raise ValueError("breakeven_trigger_pct must not be negative.")
+    if config.strategy.partial_take_profit_pct < 0:
+        raise ValueError("partial_take_profit_pct must not be negative.")
+    if not 0 < config.strategy.partial_take_profit_fraction <= 1:
+        raise ValueError("partial_take_profit_fraction must be between 0 and 1.")
+    if config.strategy.trailing_stop_pct < 0:
+        raise ValueError("trailing_stop_pct must not be negative.")
+    if config.strategy.min_orderbook_imbalance <= 0:
+        raise ValueError("min_orderbook_imbalance must be positive.")
+    if config.strategy.max_orderbook_spread_bps < 0:
+        raise ValueError("max_orderbook_spread_bps must not be negative.")
+    if not 0 <= config.strategy.min_market_breadth_ratio <= 1:
+        raise ValueError("min_market_breadth_ratio must be between 0 and 1.")
+    if config.strategy.min_price_krw < 0:
+        raise ValueError("min_price_krw must not be negative.")
+    if config.strategy.max_recent_stopouts_per_market < 0:
+        raise ValueError("max_recent_stopouts_per_market must not be negative.")
+    if config.strategy.stopout_lookback_ticks < 0:
+        raise ValueError("stopout_lookback_ticks must not be negative.")
+    if config.strategy.five_minute_short_window <= 0:
+        raise ValueError("five_minute_short_window must be positive.")
+    if config.strategy.five_minute_long_window <= config.strategy.five_minute_short_window:
+        raise ValueError("five_minute_long_window must be greater than five_minute_short_window.")
+    if config.strategy.five_minute_trend_tolerance_pct < 0:
+        raise ValueError("five_minute_trend_tolerance_pct must not be negative.")
+    if config.strategy.range_rebound_lookback < 3:
+        raise ValueError("range_rebound_lookback must be at least 3.")
+    if config.strategy.range_rebound_max_distance_from_low_pct < 0:
+        raise ValueError("range_rebound_max_distance_from_low_pct must not be negative.")
+    if config.strategy.range_rebound_max_ema_gap_pct < 0:
+        raise ValueError("range_rebound_max_ema_gap_pct must not be negative.")
+    if config.strategy.range_rebound_min_volume_ratio <= 0:
+        raise ValueError("range_rebound_min_volume_ratio must be positive.")
+    if config.strategy.range_rebound_min_expected_upside_pct < 0:
+        raise ValueError("range_rebound_min_expected_upside_pct must not be negative.")
+    if not 0 <= config.strategy.range_rebound_min_rsi <= 100:
+        raise ValueError("range_rebound_min_rsi must be between 0 and 100.")
+    if not 0 <= config.strategy.range_rebound_max_entry_rsi <= 100:
+        raise ValueError("range_rebound_max_entry_rsi must be between 0 and 100.")
+    if config.strategy.range_rebound_trend_break_grace_ticks < 0:
+        raise ValueError("range_rebound_trend_break_grace_ticks must not be negative.")
     if not 0 < config.risk.max_position_fraction <= 1:
         raise ValueError("max_position_fraction must be between 0 and 1.")
     if config.risk.max_entries_per_day < 1:
@@ -199,5 +303,7 @@ def _validate_config(config: AppConfig) -> None:
         raise ValueError("halt_cooldown_ticks must not be negative.")
     if config.risk.consecutive_loss_cooldown_ticks < 0:
         raise ValueError("consecutive_loss_cooldown_ticks must not be negative.")
+    if config.risk.max_expected_downside_to_upside_ratio <= 0:
+        raise ValueError("max_expected_downside_to_upside_ratio must be positive.")
     if not 0 <= config.ai_decision.min_confidence <= 1:
         raise ValueError("ai_decision.min_confidence must be between 0 and 1.")

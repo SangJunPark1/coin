@@ -28,16 +28,46 @@ class Signal:
     reason: str
     price: float
     confidence: float = 0.0
+    size_fraction: float = 1.0
 
 
 @dataclass
 class Position:
     qty: float = 0.0
     avg_price: float = 0.0
+    peak_price: float = 0.0
+    partial_exit_taken: bool = False
 
     @property
     def is_open(self) -> bool:
         return self.qty > 0
+
+
+@dataclass(frozen=True)
+class OrderbookSnapshot:
+    market: str
+    timestamp: datetime
+    best_bid_price: float
+    best_bid_size: float
+    best_ask_price: float
+    best_ask_size: float
+    total_bid_size: float
+    total_ask_size: float
+
+    @property
+    def spread_bps(self) -> float:
+        if self.best_bid_price <= 0 or self.best_ask_price <= 0:
+            return 0.0
+        mid = (self.best_bid_price + self.best_ask_price) / 2.0
+        if mid <= 0:
+            return 0.0
+        return ((self.best_ask_price - self.best_bid_price) / mid) * 10_000.0
+
+    @property
+    def imbalance_ratio(self) -> float:
+        if self.total_ask_size <= 0:
+            return 999.0
+        return self.total_bid_size / self.total_ask_size
 
 
 @dataclass(frozen=True)

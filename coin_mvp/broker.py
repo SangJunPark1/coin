@@ -35,6 +35,8 @@ class PaperBroker:
             (previous_qty * self.position.avg_price) + (qty * fill_price)
         ) / new_qty
         self.position.qty = new_qty
+        self.position.peak_price = max(self.position.peak_price, fill_price)
+        self.position.partial_exit_taken = False
         self.cash -= total_cost
 
         return Fill(
@@ -50,11 +52,16 @@ class PaperBroker:
             reason=reason,
         )
 
-    def sell_all(self, price: float, reason: str) -> Fill | None:
+    def sell_fraction(self, price: float, fraction: float, reason: str) -> Fill | None:
         if not self.position.is_open:
             return None
+        fraction = max(0.0, min(1.0, fraction))
+        if fraction <= 0:
+            return None
 
-        qty = self.position.qty
+        qty = self.position.qty * fraction
+        if qty <= 0:
+            return None
         fill_price = self._apply_slippage(price, Side.SELL)
         gross = qty * fill_price
         fee = gross * self.fee_rate
@@ -63,7 +70,14 @@ class PaperBroker:
 
         self.cash += proceeds
         self.realized_pnl += pnl
-        self.position = Position()
+        remaining_qty = max(0.0, self.position.qty - qty)
+        position_qty_after = remaining_qty
+        if remaining_qty <= 1e-12:
+            self.position = Position()
+            position_qty_after = 0.0
+        else:
+            self.position.qty = remaining_qty
+            self.position.partial_exit_taken = self.position.partial_exit_taken or fraction < 1.0
 
         return Fill(
             timestamp=utc_now(),
@@ -73,10 +87,18 @@ class PaperBroker:
             qty=qty,
             fee=fee,
             cash_after=self.cash,
-            position_qty_after=0.0,
+            position_qty_after=position_qty_after,
             realized_pnl=pnl,
             reason=reason,
         )
+
+    def sell_all(self, price: float, reason: str) -> Fill | None:
+        return self.sell_fraction(price, 1.0, reason)
+
+    def mark_peak(self, price: float) -> None:
+        if not self.position.is_open:
+            return
+        self.position.peak_price = max(self.position.peak_price, price)
 
     def _apply_slippage(self, price: float, side: Side) -> float:
         multiplier = self.slippage_bps / 10_000.0
