@@ -1,27 +1,27 @@
 {
   "started_at": "2026-04-26T17:50:00+09:00",
-  "last_run_at": "2026-04-27T04:37:35+09:00",
+  "last_run_at": "2026-04-27T05:10:12+09:00",
   "ended": false,
-  "tick": 129,
-  "current_market": null,
-  "position_entry_tick": null,
+  "tick": 136,
+  "current_market": "KRW-ORCA",
+  "position_entry_tick": 135,
   "market_reentry_until_tick": {},
   "market_stopout_ticks": {},
   "broker": {
-    "market": "KRW-RAY",
-    "cash": 1000517.9000212288,
+    "market": "KRW-ORCA",
+    "cash": 866177.0206736452,
     "realized_pnl": 557.9000212287938,
     "position": {
-      "qty": 0.0,
-      "avg_price": 0.0,
-      "peak_price": 0.0,
+      "qty": 65.78755176720944,
+      "avg_price": 2041.02,
+      "peak_price": 2041.02,
       "partial_exit_taken": false
     }
   },
   "risk": {
     "starting_equity": 1000000.0,
     "day_key": "2026-04-26",
-    "entries_today": 1,
+    "entries_today": 2,
     "exits_today": 1,
     "consecutive_losses": 0,
     "halted": false,
