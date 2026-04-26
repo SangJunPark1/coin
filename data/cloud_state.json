@@ -1,17 +1,21 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-26T17:20:26+09:00",
+  "last_run_at": "2026-04-26T17:44:34+09:00",
   "ended": true,
-  "tick": 1149,
+  "tick": 1150,
   "current_market": null,
   "position_entry_tick": null,
+  "market_reentry_until_tick": {},
+  "market_stopout_ticks": {},
   "broker": {
     "market": "KRW-BIO",
     "cash": 987045.503431846,
     "realized_pnl": -11370.077350381587,
     "position": {
       "qty": 0.0,
-      "avg_price": 0.0
+      "avg_price": 0.0,
+      "peak_price": 0.0,
+      "partial_exit_taken": false
     }
   },
   "risk": {
