@@ -1,8 +1,8 @@
 {
   "started_at": "2026-04-26T17:50:00+09:00",
-  "last_run_at": "2026-04-28T21:18:35+09:00",
+  "last_run_at": "2026-04-28T22:17:12+09:00",
   "ended": false,
-  "tick": 579,
+  "tick": 591,
   "current_market": "KRW-TOKAMAK",
   "position_entry_tick": 572,
   "market_reentry_until_tick": {},
@@ -14,7 +14,7 @@
     "position": {
       "qty": 210.74400381398323,
       "avg_price": 813.4064999999999,
-      "peak_price": 814.0,
+      "peak_price": 815.0,
       "partial_exit_taken": false
     }
   },
