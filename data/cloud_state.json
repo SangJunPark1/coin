@@ -1,20 +1,26 @@
 {
   "started_at": "2026-04-26T17:50:00+09:00",
-  "last_run_at": "2026-04-28T22:17:12+09:00",
+  "last_run_at": "2026-04-29T00:50:13+09:00",
   "ended": false,
-  "tick": 591,
-  "current_market": "KRW-TOKAMAK",
-  "position_entry_tick": 572,
-  "market_reentry_until_tick": {},
-  "market_stopout_ticks": {},
+  "tick": 603,
+  "current_market": null,
+  "position_entry_tick": null,
+  "market_reentry_until_tick": {
+    "KRW-TOKAMAK": 604
+  },
+  "market_stopout_ticks": {
+    "KRW-TOKAMAK": [
+      592
+    ]
+  },
   "broker": {
     "market": "KRW-TOKAMAK",
-    "cash": 835721.9766180043,
-    "realized_pnl": 7644.159042691434,
+    "cash": 1004569.6932399328,
+    "realized_pnl": 5071.333126301208,
     "position": {
-      "qty": 210.74400381398323,
-      "avg_price": 813.4064999999999,
-      "peak_price": 815.0,
+      "qty": 0.0,
+      "avg_price": 0.0,
+      "peak_price": 0.0,
       "partial_exit_taken": false
     }
   },
@@ -22,8 +28,8 @@
     "starting_equity": 1004789.3616960886,
     "day_key": "2026-04-28",
     "entries_today": 2,
-    "exits_today": 2,
-    "consecutive_losses": 0,
+    "exits_today": 3,
+    "consecutive_losses": 1,
     "halted": false,
     "halt_reason": "",
     "period_started_at": "2026-04-28T19:35:00+09:00",
