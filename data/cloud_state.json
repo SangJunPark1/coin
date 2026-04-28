@@ -1,8 +1,8 @@
 {
   "started_at": "2026-04-26T17:50:00+09:00",
-  "last_run_at": "2026-04-29T07:52:07+09:00",
+  "last_run_at": "2026-04-29T08:44:39+09:00",
   "ended": false,
-  "tick": 711,
+  "tick": 723,
   "current_market": null,
   "position_entry_tick": null,
   "market_reentry_until_tick": {
@@ -14,9 +14,9 @@
     ]
   },
   "broker": {
-    "market": "KRW-ORCA",
-    "cash": 1003968.9397254076,
-    "realized_pnl": 4553.983620635321,
+    "market": "KRW-AXS",
+    "cash": 1003567.703337953,
+    "realized_pnl": 4253.14412715318,
     "position": {
       "qty": 0.0,
       "avg_price": 0.0,
@@ -27,9 +27,9 @@
   "risk": {
     "starting_equity": 1004789.3616960886,
     "day_key": "2026-04-28",
-    "entries_today": 3,
-    "exits_today": 4,
-    "consecutive_losses": 2,
+    "entries_today": 4,
+    "exits_today": 5,
+    "consecutive_losses": 3,
     "halted": false,
     "halt_reason": "",
     "period_started_at": "2026-04-28T19:35:00+09:00",
