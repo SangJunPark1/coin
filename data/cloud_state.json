@@ -1,32 +1,32 @@
 {
   "started_at": "2026-04-26T17:50:00+09:00",
-  "last_run_at": "2026-04-28T19:02:07+09:00",
+  "last_run_at": "2026-04-28T19:37:52+09:00",
   "ended": false,
-  "tick": 543,
-  "current_market": null,
-  "position_entry_tick": null,
+  "tick": 555,
+  "current_market": "KRW-ORCA",
+  "position_entry_tick": 545,
   "market_reentry_until_tick": {},
   "market_stopout_ticks": {},
   "broker": {
-    "market": "KRW-ZBT",
-    "cash": 1004789.3616960886,
+    "market": "KRW-ORCA",
+    "cash": 833617.1886110707,
     "realized_pnl": 5119.662348071375,
     "position": {
-      "qty": 0.0,
-      "avg_price": 0.0,
-      "peak_price": 0.0,
+      "qty": 72.30489913541129,
+      "avg_price": 2366.1825,
+      "peak_price": 2376.0,
       "partial_exit_taken": false
     }
   },
   "risk": {
-    "starting_equity": 1002435.5665191632,
-    "day_key": "2026-04-27",
-    "entries_today": 2,
-    "exits_today": 3,
+    "starting_equity": 1004789.3616960886,
+    "day_key": "2026-04-28",
+    "entries_today": 1,
+    "exits_today": 0,
     "consecutive_losses": 1,
     "halted": false,
     "halt_reason": "",
-    "period_started_at": "2026-04-27T19:24:00+09:00",
+    "period_started_at": "2026-04-28T19:35:00+09:00",
     "halt_started_tick": null,
     "halt_until_tick": null
   }
