@@ -1,8 +1,8 @@
 {
   "started_at": "2026-04-26T17:50:00+09:00",
-  "last_run_at": "2026-04-29T05:48:18+09:00",
+  "last_run_at": "2026-04-29T06:03:54+09:00",
   "ended": false,
-  "tick": 675,
+  "tick": 687,
   "current_market": null,
   "position_entry_tick": null,
   "market_reentry_until_tick": {
@@ -14,9 +14,9 @@
     ]
   },
   "broker": {
-    "market": "KRW-TOKAMAK",
-    "cash": 1004569.6932399328,
-    "realized_pnl": 5071.333126301208,
+    "market": "KRW-ORCA",
+    "cash": 1003968.9397254076,
+    "realized_pnl": 4553.983620635321,
     "position": {
       "qty": 0.0,
       "avg_price": 0.0,
@@ -27,9 +27,9 @@
   "risk": {
     "starting_equity": 1004789.3616960886,
     "day_key": "2026-04-28",
-    "entries_today": 2,
-    "exits_today": 3,
-    "consecutive_losses": 1,
+    "entries_today": 3,
+    "exits_today": 4,
+    "consecutive_losses": 2,
     "halted": false,
     "halt_reason": "",
     "period_started_at": "2026-04-28T19:35:00+09:00",
