@@ -1,17 +1,15 @@
 {
   "started_at": "2026-04-26T17:50:00+09:00",
-  "last_run_at": "2026-04-29T10:33:06+09:00",
+  "last_run_at": "2026-04-29T13:51:25+09:00",
   "ended": false,
-  "tick": 735,
+  "tick": 747,
   "current_market": null,
   "position_entry_tick": null,
   "market_reentry_until_tick": {
     "KRW-TOKAMAK": 604
   },
   "market_stopout_ticks": {
-    "KRW-TOKAMAK": [
-      592
-    ]
+    "KRW-TOKAMAK": []
   },
   "broker": {
     "market": "KRW-AXS",
