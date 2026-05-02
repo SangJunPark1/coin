@@ -1,8 +1,8 @@
 {
   "started_at": "2026-04-26T17:50:00+09:00",
-  "last_run_at": "2026-05-02T08:37:30+09:00",
+  "last_run_at": "2026-05-02T09:18:50+09:00",
   "ended": false,
-  "tick": 1616,
+  "tick": 1625,
   "current_market": null,
   "position_entry_tick": null,
   "market_reentry_until_tick": {
@@ -31,7 +31,7 @@
     "halted": true,
     "halt_reason": "max consecutive losses reached",
     "period_started_at": "2026-05-01T20:20:00+09:00",
-    "halt_started_tick": 1520,
-    "halt_until_tick": 1532
+    "halt_started_tick": 1622,
+    "halt_until_tick": 1634
   }
 }
